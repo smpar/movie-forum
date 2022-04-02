@@ -21,7 +21,7 @@ public class User {
     private String last_name;
 
     @OneToMany
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")   // Foreing key relationship
     Set<Movie> movies = new HashSet<>();
 
     public User(String first_name, String last_name) {

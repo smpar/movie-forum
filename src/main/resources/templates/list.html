@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Welcome to: MovieRama</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 60%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+</head>
+<body>
+    <h1>MovieRama</h1>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Posted By</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Likes</th>
+            <th>Hates</th>
+        </tr>
+        <tr th:each="review : ${allreviews}">
+            <td th:text="${review.title}"></td>
+            <td th:text="|${review.user.first_name} ${review.user.last_name}|"></td>
+            <td th:text="${review.date}"></td>
+            <td th:text="${review.description}"></td>
+            <td th:text="${review.likes}"></td>
+            <td th:text="${review.hates}"></td>
+        </tr>
+    </table>
+</body>
+</html> 
