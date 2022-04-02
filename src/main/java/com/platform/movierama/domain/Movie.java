@@ -2,13 +2,27 @@ package com.platform.movierama.domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Movie {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String title;
     private String description;
     private Date date;
     private int likes;
     private int hates;
+
+    @ManyToOne
+    private User user;
 
     public Movie(String title, String description, Date date, int likes, int hates) {
         this.title = title;
@@ -61,9 +75,25 @@ public class Movie {
         this.hates = hates;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "Movie [date=" + date + ", description=" + description + ", hates=" + hates + ", likes=" + likes
-                + ", title=" + title + "]";
+        return "Movie [date=" + date + ", description=" + description + ", hates=" + hates + ", id=" + id + ", likes="
+                + likes + ", title=" + title + "]";
     }
 }
