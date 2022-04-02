@@ -20,4 +20,22 @@ public class MainController {
         model.addAttribute("allreviews", movieRepo.findAll());
         return "list";
     }
+
+    @RequestMapping("/sort-by-likes")
+    public String sortByLikes(Model model) {
+        model.addAttribute("allreviews", movieRepo.findAllOrderByLikes());
+        return "list";
+    }
+
+    @RequestMapping("/sort-by-hates")
+    public String sortByHates(Model model) {
+        model.addAttribute("allreviews", movieRepo.findAllOrderByHates());
+        return "list";
+    }
+
+    @RequestMapping("/sort-by-date")
+    public String sortByDate(Model model) {
+        model.addAttribute("allreviews", movieRepo.findAllOrderByDate());
+        return "list";
+    }
 }
