@@ -38,7 +38,11 @@
         </tr>
         <tr th:each="review : ${allreviews}">
             <td th:text="${review.title}"></td>
-            <td th:text="|${review.user.first_name} ${review.user.last_name}|"></td>
+            <td>
+              <a href="#" data-th-href="@{/sort-by-user(fnameParam=${review.user.first_name}, lnameParam=${review.user.last_name})}">
+                  <p th:text="|${review.user.first_name} ${review.user.last_name}|" />
+              </a>
+            </td>
             <td th:text="${review.date}"></td>
             <td th:text="${review.description}"></td>
             <td th:text="${review.likes}"></td>

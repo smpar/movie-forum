@@ -16,4 +16,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long>{
     @Query("SELECT m FROM Movie m ORDER BY m.date DESC")
     Iterable<Movie> findAllOrderByDate();
 
+    @Query(value = "SELECT * FROM Movie m INNER JOIN User u ON m.user_id = u.id "+
+                    "WHERE u.first_name = ?1 AND u.last_name = ?2", nativeQuery = true)
+    Iterable<Movie> findAllByName(String fname, String lname);
 }
