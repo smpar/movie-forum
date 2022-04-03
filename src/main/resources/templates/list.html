@@ -27,9 +27,6 @@
 <body>
   <h1>MovieRama</h1>
 
-  <!-- Sorting capabilities -->
-  <h3>Sort by:  <a href="/sort-by-likes">Likes</a> | <a href="/sort-by-hates">Hates</a> | <a href="/sort-by-date">Date</a> </h3>
-
   <!-- Login/Signup tags. TODO: Order is fragile, needs beautify.-->
   <div style='float:right'>
     <form th:action="@{/signup}" method="post">
@@ -44,6 +41,9 @@
       <input type="submit" value="Log in"  />
     </form>
   </div>
+
+  <!-- Sorting capabilities -->
+  <h3>Sort by:  <a href="/sort-by-likes">Likes</a> | <a href="/sort-by-hates">Hates</a> | <a href="/sort-by-date">Date</a> </h3>
 
   <!-- Display items -->
   <table>
