@@ -1,4 +1,4 @@
-package com.platform.movierama.controller;
+package com.platform.movierama.authentication;
 
 import com.platform.movierama.domain.User;
 import com.platform.movierama.repositories.UserRepository;

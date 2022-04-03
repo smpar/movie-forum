@@ -1,4 +1,4 @@
-package com.platform.movierama.controller;
+package com.platform.movierama.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http
             .authorizeRequests()
                 .antMatchers("/", "/main", "/sort-by-likes", "/sort-by-hates",
-                    "/sort-by-date", "/sort-by-user", "/login").permitAll()
+                    "/sort-by-date", "/sort-by-user", "/login", "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

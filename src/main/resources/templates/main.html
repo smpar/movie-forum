@@ -66,5 +66,8 @@
       <td th:text="${review.hates}"></td>
     </tr>
     </table>
+
+    <!-- Upon un/successfull registration -->
+    <h2 th:if="${signupmessage}"> <td th:text="${signupmessage}"></td> </h2>
 </body>
 </html> 
