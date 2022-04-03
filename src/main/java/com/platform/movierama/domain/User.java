@@ -19,14 +19,17 @@ public class User {
 
     private String first_name;
     private String last_name;
+    private String username;
+    private String password;
 
     @OneToMany
     @JoinColumn(name = "user_id")   // Foreing key relationship
     Set<Movie> movies = new HashSet<>();
 
-    public User(String first_name, String last_name) {
+    public User(String first_name, String last_name, String username) {
         this.first_name = first_name;
         this.last_name = last_name;
+        this.username = username;
     }
 
     public User() {
@@ -64,8 +67,25 @@ public class User {
         this.movies = movies;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
-        return "User [first_name=" + first_name + ", id=" + id + ", last_name=" + last_name + "]";
+        return "User [first_name=" + first_name + ", id=" + id + ", last_name=" + last_name + ", username=" + username
+                + "]";
     }
 }

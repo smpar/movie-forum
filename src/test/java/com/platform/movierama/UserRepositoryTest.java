@@ -23,13 +23,13 @@ public class UserRepositoryTest {
 
     @Test
     public void checkUserSavedProperly() {
-        userRepo.save(new User("First", "Last"));
+        userRepo.save(new User("First", "Last", "firstlast"));
         assertThat(userRepo.count()).isEqualTo(1);
     }
 
     @Test public void checkInsertedUsers() {
-        userRepo.save(new User("Jaime", "Lannister"));
-        userRepo.save(new User("Theon", "Greyjoy"));
+        userRepo.save(new User("Jaime", "Lannister", "jaimelannister"));
+        userRepo.save(new User("Theon", "Greyjoy", "theongreyjoy"));
 
         // fetch all users
         for(User user : userRepo.findAll()) {
