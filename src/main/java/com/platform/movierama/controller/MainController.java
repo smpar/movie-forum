@@ -41,10 +41,15 @@ public class MainController {
     }
 
     @RequestMapping(value = "/sort-by-user")
-    public String sortByhaha(@RequestParam(value = "fnameParam") String fname,
+    public String sortByUser(@RequestParam(value = "fnameParam") String fname,
                              @RequestParam(value = "lnameParam") String lname,
                              Model model) {
         model.addAttribute("allreviews", movieRepo.findAllByName(fname, lname));
         return "list";
+    }
+
+    @RequestMapping(value = "/login")
+    public String login(Model model) {
+        return "login";
     }
 }

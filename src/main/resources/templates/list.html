@@ -27,20 +27,28 @@
 <body>
   <h1>MovieRama</h1>
 
-  <!-- Login/Signup tags. TODO: Order is fragile, needs beautify.-->
-  <div style='float:right'>
-    <form th:action="@{/signup}" method="post">
-      <input type="submit" value="Sign up" />
-    </form>
-  </div>
-  <div style='float:right'>
-    &nbsp; or &nbsp;
-  </div>
-  <div style='float:right'>
-    <form th:action="@{/login}" method="post">
-      <input type="submit" value="Log in"  />
-    </form>
-  </div>
+  <!-- Login/Signup/Welcome tags. TODO: Order is fragile, needs beautify.-->
+  <td th:if="!${#httpServletRequest.remoteUser}">
+    <div style='float:right'>
+      <form th:action="@{/hohoho}" method="post">
+        <input type="submit" value="Sign up" />
+      </form>
+    </div>
+    <div style='float:right'>
+      &nbsp; or &nbsp;
+    </div>
+    <div style='float:right'>
+      <form th:action="@{/hahaha}" method="post">
+        <input type="submit" value="Log in"  />
+      </form>
+    </div>
+  </td>
+
+  <td th:if="${#httpServletRequest.remoteUser}">
+    <div style='float:right'>
+    <h2>Welcome back [[${#httpServletRequest.remoteUser}]]!</h2>
+    </div>
+  </td>
 
   <!-- Sorting capabilities -->
   <h3>Sort by:  <a href="/sort-by-likes">Likes</a> | <a href="/sort-by-hates">Hates</a> | <a href="/sort-by-date">Date</a> </h3>
