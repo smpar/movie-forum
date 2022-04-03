@@ -30,20 +30,9 @@
   <!-- Login/Signup/Welcome tags. TODO: Order is fragile, needs beautify.-->
   <td th:if="!${#httpServletRequest.remoteUser}">
     <div style='float:right'>
-      <form th:action="@{/hohoho}" method="post">
-        <input type="submit" value="Sign up" />
-      </form>
-    </div>
-    <div style='float:right'>
-      &nbsp; or &nbsp;
-    </div>
-    <div style='float:right'>
-      <form th:action="@{/hahaha}" method="post">
-        <input type="submit" value="Log in"  />
-      </form>
+      <h3><a href="/login">Log in</a> or <a href="/signup">Signup</a></h3>
     </div>
   </td>
-
   <td th:if="${#httpServletRequest.remoteUser}">
     <div style='float:right'>
     <h2>Welcome back [[${#httpServletRequest.remoteUser}]]!</h2>

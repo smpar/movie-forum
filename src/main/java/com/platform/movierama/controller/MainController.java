@@ -16,28 +16,28 @@ public class MainController {
         this.movieRepo = movieRepo;
     }
 
-    @RequestMapping("/reviews")
+    @RequestMapping({"/", "/main"})
     public String getMovies(Model model) {
         model.addAttribute("allreviews", movieRepo.findAll());
-        return "list";
+        return "main";
     }
 
     @RequestMapping("/sort-by-likes")
     public String sortByLikes(Model model) {
         model.addAttribute("allreviews", movieRepo.findAllOrderByLikes());
-        return "list";
+        return "main";
     }
 
     @RequestMapping("/sort-by-hates")
     public String sortByHates(Model model) {
         model.addAttribute("allreviews", movieRepo.findAllOrderByHates());
-        return "list";
+        return "main";
     }
 
     @RequestMapping("/sort-by-date")
     public String sortByDate(Model model) {
         model.addAttribute("allreviews", movieRepo.findAllOrderByDate());
-        return "list";
+        return "main";
     }
 
     @RequestMapping(value = "/sort-by-user")
@@ -45,7 +45,7 @@ public class MainController {
                              @RequestParam(value = "lnameParam") String lname,
                              Model model) {
         model.addAttribute("allreviews", movieRepo.findAllByName(fname, lname));
-        return "list";
+        return "main";
     }
 
     @RequestMapping(value = "/login")
