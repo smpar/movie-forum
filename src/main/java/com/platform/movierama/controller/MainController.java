@@ -1,8 +1,11 @@
 package com.platform.movierama.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.platform.movierama.authentication.UserService;
+import com.platform.movierama.domain.Movie;
 import com.platform.movierama.domain.User;
 import com.platform.movierama.repositories.MovieRepository;
 import com.platform.movierama.repositories.UserRepository;
@@ -83,6 +86,30 @@ public class MainController {
         String message = userService.save(user);
         model.addAttribute("allreviews", movieRepo.findAll());
         model.addAttribute("signupmessage", message);
+        return "main";
+    }
+
+    @RequestMapping("/new-movie")
+    public String addNewMovie(Model model) {
+        Movie movie = new Movie();
+        model.addAttribute("movie", movie);
+        return "new-movie";
+    }
+
+    @PostMapping("/new-movie")
+    public String addNewMoviePost(@ModelAttribute("movie") Movie movie, Model model) {
+        System.out.println(movie.toString());
+        Date date = new Date();
+        movie.setDate(date);
+
+        // Since we are here, someone is already registered.
+        User user = userRepo.getUserByUsername(context.getRemoteUser());
+        user.getMovies().add(movie);
+        movie.setUser(user);
+        movieRepo.save(movie);
+
+        checkForLoggedUser(model);
+        model.addAttribute("allreviews", movieRepo.findAll());
         return "main";
     }
 
