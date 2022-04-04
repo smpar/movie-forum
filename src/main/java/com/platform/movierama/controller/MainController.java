@@ -1,9 +1,18 @@
 package com.platform.movierama.controller;
 
-import com.platform.movierama.repositories.MovieRepository;
+import javax.servlet.http.HttpServletRequest;
 
+import com.platform.movierama.authentication.UserService;
+import com.platform.movierama.domain.User;
+import com.platform.movierama.repositories.MovieRepository;
+import com.platform.movierama.repositories.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -11,40 +20,77 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
 
     private final MovieRepository movieRepo;
+    private final UserRepository userRepo;
 
-    public MainController(MovieRepository movieRepo) {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private HttpServletRequest context;
+
+    public MainController(MovieRepository movieRepo, UserRepository userRepo) {
+        this.userRepo = userRepo;
         this.movieRepo = movieRepo;
     }
 
-    @RequestMapping("/reviews")
+    @RequestMapping({"/", "/main"})
     public String getMovies(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAll());
-        return "list";
+        return "main";
     }
 
     @RequestMapping("/sort-by-likes")
     public String sortByLikes(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllOrderByLikes());
-        return "list";
+        return "main";
     }
 
     @RequestMapping("/sort-by-hates")
     public String sortByHates(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllOrderByHates());
-        return "list";
+        return "main";
     }
 
     @RequestMapping("/sort-by-date")
     public String sortByDate(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllOrderByDate());
-        return "list";
+        return "main";
     }
 
     @RequestMapping(value = "/sort-by-user")
-    public String sortByhaha(@RequestParam(value = "fnameParam") String fname,
+    public String sortByUser(@RequestParam(value = "fnameParam") String fname,
                              @RequestParam(value = "lnameParam") String lname,
                              Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllByName(fname, lname));
-        return "list";
+        return "main";
+    }
+
+    @GetMapping("/signup")
+    public String registration(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String registration(@ModelAttribute("user") User user, Model model) {
+        System.out.println(user.toString());
+
+        String message = userService.save(user);
+        model.addAttribute("allreviews", movieRepo.findAll());
+        model.addAttribute("signupmessage", message);
+        return "main";
+    }
+
+    private void checkForLoggedUser(Model model) {
+        if(context.getRemoteUser() != null){
+            User user = userRepo.getUserByUsername(context.getRemoteUser());
+            model.addAttribute("fname", user.getFirst_name());
+            model.addAttribute("lname", user.getLast_name());
+        }
     }
 }

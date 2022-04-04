@@ -44,11 +44,11 @@ public class MovieRepositoryTest {
     }
 
     @Test public void CheckReferenceFromMovieToUser() {
-        User u1 = new User("Jaime", "Lannister");
+        User u1 = new User("Jaime", "Lannister", "jaimelannister");
         userRepo.save(u1);
-        User u2 = new User("Theon", "Greyjoy");
+        User u2 = new User("Theon", "Greyjoy", "theongreyjoy");
         userRepo.save(u2);
-        User u3 = new User("Eddard", "Stark");
+        User u3 = new User("Eddard", "Stark", "eddardstark");
         userRepo.save(u3);
 
         Date date = new Date();

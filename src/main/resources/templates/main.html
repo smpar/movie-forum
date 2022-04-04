@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+  <title>Welcome to: MovieRama</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <!-- Style for the Table with all movies details -->
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 60%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>MovieRama</h1>
+
+  <!-- Login/Signup/Welcome tags. TODO: Order is fragile, needs beautify.-->
+  <td th:if="!${fname}">
+    <div style='float:right'>
+      <h3><a href="/login">Log in</a> or <a href="/signup">Signup</a></h3>
+    </div>
+  </td>
+
+  <td th:if="${fname}">
+    <div style='float:right'>
+      <h2> Welcome back
+          <!-- Sort per user -->
+          <a href="#" data-th-href="@{/sort-by-user(fnameParam=${fname}, lnameParam=${lname})}">
+            <p th:text="|${fname} ${lname}|" />
+          </a>
+      </h2>
+    </div>
+  </td>
+
+  <!-- Sorting capabilities -->
+  <h3>Sort by:  <a href="/sort-by-likes">Likes</a> | <a href="/sort-by-hates">Hates</a> | <a href="/sort-by-date">Date</a> </h3>
+
+  <!-- Display items -->
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Posted By</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Likes</th>
+      <th>Hates</th>
+    </tr>
+    <tr th:each="review : ${allreviews}">
+      <td th:text="${review.title}"></td>
+      <td>
+        <!-- Sort per user -->
+        <a href="#" data-th-href="@{/sort-by-user(fnameParam=${review.user.first_name}, lnameParam=${review.user.last_name})}">
+          <p th:text="|${review.user.first_name} ${review.user.last_name}|" />
+        </a>
+      </td>
+      <td th:text="${review.date}"></td>
+      <td th:text="${review.description}"></td>
+      <td th:text="${review.likes}"></td>
+      <td th:text="${review.hates}"></td>
+    </tr>
+    </table>
+
+    <!-- Upon un/successfull registration -->
+    <h2 th:if="${signupmessage}"> <td th:text="${signupmessage}"></td> </h2>
+</body>
+</html> 
