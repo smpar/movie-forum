@@ -80,7 +80,7 @@ public class MainController {
     }
 
     @PostMapping("/signup")
-    public String registration(@ModelAttribute("user") User user, Model model) {
+    public String registrationPost(@ModelAttribute("user") User user, Model model) {
         System.out.println(user.toString());
 
         String message = userService.save(user);
