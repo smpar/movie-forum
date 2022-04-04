@@ -117,8 +117,16 @@ public class MainController {
     @RequestMapping(value = "/like")
     public String likeMovie(@RequestParam(value = "idParam") Long movieId, Model model) {
         Optional<Movie> movie = movieRepo.findById(movieId);
-        movie.get().setLikes(movie.get().getLikes() + 1);
-        movieRepo.save(movie.get());
+
+        // Check if the review belongs to the logged in, to prevent him from voting.
+        User loggedUser = userRepo.getUserByUsername(context.getRemoteUser());
+        if(loggedUser.getMovies().contains(movie.get())) {
+            System.out.println("This was uploaded by me. Cannot vote for it.");
+        } else {
+            System.out.println("This was not uploaded by me.");
+            movie.get().setLikes(movie.get().getLikes() + 1);
+            movieRepo.save(movie.get());
+        }
 
         checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAll());
@@ -128,8 +136,16 @@ public class MainController {
     @RequestMapping(value = "/hate")
     public String hateMovie(@RequestParam(value = "idParam") Long movieId, Model model) {
         Optional<Movie> movie = movieRepo.findById(movieId);
-        movie.get().setHates(movie.get().getHates() + 1);
-        movieRepo.save(movie.get());
+
+        // Check if the review belongs to the logged in, to prevent him from voting.
+        User loggedUser = userRepo.getUserByUsername(context.getRemoteUser());
+        if(loggedUser.getMovies().contains(movie.get())) {
+            System.out.println("This was uploaded by me. Cannot vote for it.");
+        } else {
+            System.out.println("This was not uploaded by me.");
+            movie.get().setHates(movie.get().getHates() + 1);
+            movieRepo.save(movie.get());
+        }
 
         checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAll());
