@@ -28,14 +28,20 @@
   <h1>MovieRama</h1>
 
   <!-- Login/Signup/Welcome tags. TODO: Order is fragile, needs beautify.-->
-  <td th:if="!${#httpServletRequest.remoteUser}">
+  <td th:if="!${fname}">
     <div style='float:right'>
       <h3><a href="/login">Log in</a> or <a href="/signup">Signup</a></h3>
     </div>
   </td>
-  <td th:if="${#httpServletRequest.remoteUser}">
+
+  <td th:if="${fname}">
     <div style='float:right'>
-    <h2>Welcome back [[${#httpServletRequest.remoteUser}]]!</h2>
+      <h2> Welcome back
+          <!-- Sort per user -->
+          <a href="#" data-th-href="@{/sort-by-user(fnameParam=${fname}, lnameParam=${lname})}">
+            <p th:text="|${fname} ${lname}|" />
+          </a>
+      </h2>
     </div>
   </td>
 

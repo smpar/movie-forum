@@ -1,8 +1,11 @@
 package com.platform.movierama.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.platform.movierama.authentication.UserService;
 import com.platform.movierama.domain.User;
 import com.platform.movierama.repositories.MovieRepository;
+import com.platform.movierama.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,34 +20,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
 
     private final MovieRepository movieRepo;
+    private final UserRepository userRepo;
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private HttpServletRequest context;
 
-    public MainController(MovieRepository movieRepo) {
+    public MainController(MovieRepository movieRepo, UserRepository userRepo) {
+        this.userRepo = userRepo;
         this.movieRepo = movieRepo;
     }
 
     @RequestMapping({"/", "/main"})
     public String getMovies(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAll());
         return "main";
     }
 
     @RequestMapping("/sort-by-likes")
     public String sortByLikes(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllOrderByLikes());
         return "main";
     }
 
     @RequestMapping("/sort-by-hates")
     public String sortByHates(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllOrderByHates());
         return "main";
     }
 
     @RequestMapping("/sort-by-date")
     public String sortByDate(Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllOrderByDate());
         return "main";
     }
@@ -53,13 +64,9 @@ public class MainController {
     public String sortByUser(@RequestParam(value = "fnameParam") String fname,
                              @RequestParam(value = "lnameParam") String lname,
                              Model model) {
+        checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAllByName(fname, lname));
         return "main";
-    }
-
-    @RequestMapping(value = "/login")
-    public String login(Model model) {
-        return "login";
     }
 
     @GetMapping("/signup")
@@ -77,5 +84,13 @@ public class MainController {
         model.addAttribute("allreviews", movieRepo.findAll());
         model.addAttribute("signupmessage", message);
         return "main";
+    }
+
+    private void checkForLoggedUser(Model model) {
+        if(context.getRemoteUser() != null){
+            User user = userRepo.getUserByUsername(context.getRemoteUser());
+            model.addAttribute("fname", user.getFirst_name());
+            model.addAttribute("lname", user.getLast_name());
+        }
     }
 }
