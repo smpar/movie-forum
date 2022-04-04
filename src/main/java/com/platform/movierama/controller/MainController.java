@@ -1,6 +1,7 @@
 package com.platform.movierama.controller;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -107,6 +108,28 @@ public class MainController {
         user.getMovies().add(movie);
         movie.setUser(user);
         movieRepo.save(movie);
+
+        checkForLoggedUser(model);
+        model.addAttribute("allreviews", movieRepo.findAll());
+        return "main";
+    }
+
+    @RequestMapping(value = "/like")
+    public String likeMovie(@RequestParam(value = "idParam") Long movieId, Model model) {
+        Optional<Movie> movie = movieRepo.findById(movieId);
+        movie.get().setLikes(movie.get().getLikes() + 1);
+        movieRepo.save(movie.get());
+
+        checkForLoggedUser(model);
+        model.addAttribute("allreviews", movieRepo.findAll());
+        return "main";
+    }
+
+    @RequestMapping(value = "/hate")
+    public String hateMovie(@RequestParam(value = "idParam") Long movieId, Model model) {
+        Optional<Movie> movie = movieRepo.findById(movieId);
+        movie.get().setHates(movie.get().getHates() + 1);
+        movieRepo.save(movie.get());
 
         checkForLoggedUser(model);
         model.addAttribute("allreviews", movieRepo.findAll());

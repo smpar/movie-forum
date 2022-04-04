@@ -70,8 +70,14 @@
       </td>
       <td th:text="${review.date}"></td>
       <td th:text="${review.description}"></td>
-      <td><a href="/main"><p th:text="${review.likes}"/></a></td>
-      <td><a href="/main"><p th:text="${review.hates}"/></a></td>
+      <div th:if="${fname}">
+        <td><a href="#" data-th-href="@{/like(idParam=${review.id})}"><p th:text="${review.likes}"/></a></td>
+        <td><a href="#" data-th-href="@{/hate(idParam=${review.id})}"><p th:text="${review.hates}"/></a></td>
+      </div>
+      <div th:unless="${fname}">
+        <td th:text="${review.likes}"</td>
+        <td th:text="${review.hates}"</td>
+      </div>
     </tr>
     </table>
 
