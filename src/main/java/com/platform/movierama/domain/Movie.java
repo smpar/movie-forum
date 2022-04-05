@@ -1,12 +1,15 @@
 package com.platform.movierama.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Movie {
@@ -23,6 +26,9 @@ public class Movie {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "movie")
+    Set<MovieUser> votes = new HashSet<>();
 
     public Movie(String title, String description, Date date, int likes, int hates) {
         this.title = title;
@@ -89,6 +95,14 @@ public class Movie {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<MovieUser> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<MovieUser> votes) {
+        this.votes = votes;
     }
 
     @Override
