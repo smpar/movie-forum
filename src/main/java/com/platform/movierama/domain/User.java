@@ -26,6 +26,9 @@ public class User {
     @JoinColumn(name = "user_id")   // Foreing key relationship
     Set<Movie> movies = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    Set<MovieUser> votes = new HashSet<>();
+
     public User(String first_name, String last_name, String username) {
         this.first_name = first_name;
         this.last_name = last_name;
@@ -81,6 +84,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<MovieUser> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<MovieUser> votes) {
+        this.votes = votes;
     }
 
     @Override
