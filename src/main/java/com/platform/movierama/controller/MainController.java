@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.platform.movierama.authentication.UserService;
 import com.platform.movierama.domain.Movie;
+import com.platform.movierama.domain.MovieUser;
 import com.platform.movierama.domain.User;
 import com.platform.movierama.repositories.MovieRepository;
+import com.platform.movierama.repositories.MovieUserRepository;
 import com.platform.movierama.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,17 @@ public class MainController {
 
     private final MovieRepository movieRepo;
     private final UserRepository userRepo;
+    private final MovieUserRepository movieUserRepo;
 
     @Autowired
     private UserService userService;
     @Autowired
     private HttpServletRequest context;
 
-    public MainController(MovieRepository movieRepo, UserRepository userRepo) {
+    public MainController(MovieRepository movieRepo, UserRepository userRepo, MovieUserRepository movieUserRepo) {
         this.userRepo = userRepo;
         this.movieRepo = movieRepo;
+        this.movieUserRepo = movieUserRepo;
     }
 
     @RequestMapping({"/", "/main"})
@@ -116,15 +120,44 @@ public class MainController {
 
     @RequestMapping(value = "/like")
     public String likeMovie(@RequestParam(value = "idParam") Long movieId, Model model) {
-        Optional<Movie> movie = movieRepo.findById(movieId);
+        /**
+         * If someone tries to like a post:
+         * - If the post belongs to him, don't do anything.
+         * - If he liked it once in the past, revert the vote by decreasing the likes by 1.
+         * - If he hated it once in the past, don't do anything.
+         * - If he vote for the 1st time, increase the likes by 1.
+         * - Save all the above actions.
+         */
 
-        // Check if the review belongs to the logged in, to prevent him from voting.
+        Optional<Movie> movie = movieRepo.findById(movieId);
         User loggedUser = userRepo.getUserByUsername(context.getRemoteUser());
-        if(loggedUser.getMovies().contains(movie.get())) {
-            System.out.println("This was uploaded by me. Cannot vote for it.");
-        } else {
-            System.out.println("This was not uploaded by me.");
-            movie.get().setLikes(movie.get().getLikes() + 1);
+        MovieUser association = movieUserRepo.findAllPerMovieUser(loggedUser.getId(), movie.get().getId());
+        if(association == null) {
+            MovieUser firstAssociation = new MovieUser();
+            firstAssociation.setMovie(movie.get());
+            firstAssociation.setUser(loggedUser);
+            firstAssociation.setIsliked(false);
+            firstAssociation.setIshated(false);
+            loggedUser.getVotes().add(firstAssociation);
+            movie.get().getVotes().add(firstAssociation);
+
+            movieUserRepo.save(firstAssociation);
+            association = movieUserRepo.findAllPerMovieUser(loggedUser.getId(), movie.get().getId());
+        }
+
+        boolean reviewBelongsToUser = loggedUser.getMovies().contains(movie.get());
+        boolean isAlreadyLiked = association.isIsliked();
+
+        if(!reviewBelongsToUser) {
+            if(isAlreadyLiked) {
+                association.setIsliked(false);
+                movie.get().setLikes(movie.get().getLikes() - 1);
+            } else {
+                association.setIsliked(true);
+                movie.get().setLikes(movie.get().getLikes() + 1);
+            }
+
+            movieUserRepo.save(association);
             movieRepo.save(movie.get());
         }
 
@@ -135,15 +168,44 @@ public class MainController {
 
     @RequestMapping(value = "/hate")
     public String hateMovie(@RequestParam(value = "idParam") Long movieId, Model model) {
-        Optional<Movie> movie = movieRepo.findById(movieId);
+        /**
+         * If someone tries to hate a post:
+         * - If the post belongs to him, don't do anything.
+         * - If he hated it once in the past, revert the vote by decreasing the hates by 1.
+         * - If he liked it once in the past, don't do anything.
+         * - If he vote for the 1st time, increase the hates by 1.
+         * - Save all the above actions.
+         */
 
-        // Check if the review belongs to the logged in, to prevent him from voting.
+        Optional<Movie> movie = movieRepo.findById(movieId);
         User loggedUser = userRepo.getUserByUsername(context.getRemoteUser());
-        if(loggedUser.getMovies().contains(movie.get())) {
-            System.out.println("This was uploaded by me. Cannot vote for it.");
-        } else {
-            System.out.println("This was not uploaded by me.");
-            movie.get().setHates(movie.get().getHates() + 1);
+        MovieUser association = movieUserRepo.findAllPerMovieUser(loggedUser.getId(), movie.get().getId());
+        if(association == null) {
+            MovieUser firstAssociation = new MovieUser();
+            firstAssociation.setMovie(movie.get());
+            firstAssociation.setUser(loggedUser);
+            firstAssociation.setIsliked(false);
+            firstAssociation.setIshated(false);
+            loggedUser.getVotes().add(firstAssociation);
+            movie.get().getVotes().add(firstAssociation);
+
+            movieUserRepo.save(firstAssociation);
+            association = movieUserRepo.findAllPerMovieUser(loggedUser.getId(), movie.get().getId());
+        }
+
+        boolean reviewBelongsToUser = loggedUser.getMovies().contains(movie.get());
+        boolean isAlreadyHated = association.isIshated();
+
+        if(!reviewBelongsToUser) {
+            if(isAlreadyHated) {
+                association.setIshated(false);
+                movie.get().setHates(movie.get().getHates() - 1);
+            } else {
+                association.setIshated(true);
+                movie.get().setHates(movie.get().getHates() + 1);
+            }
+
+            movieUserRepo.save(association);
             movieRepo.save(movie.get());
         }
 
