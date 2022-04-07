@@ -23,3 +23,4 @@ Launch browser on http://localhost:8080
 cd movie-rama
 ./mvnw test
 ```
+![DemoMovieRama](https://user-images.githubusercontent.com/11176750/162251818-82422bbb-d5ba-460c-afd7-7f7e3d2e6e23.gif)
