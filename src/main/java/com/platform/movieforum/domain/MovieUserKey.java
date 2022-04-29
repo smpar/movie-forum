@@ -1,4 +1,4 @@
-package com.platform.movierama.domain;
+package com.platform.movieforum.domain;
 
 import java.io.Serializable;
 

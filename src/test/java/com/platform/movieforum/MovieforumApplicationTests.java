@@ -1,10 +1,10 @@
-package com.platform.movierama;
+package com.platform.movieforum;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MovieramaApplicationTests {
+class MovieforumApplicationTests {
 
 	@Test
 	void contextLoads() {

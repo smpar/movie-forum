@@ -1,6 +1,6 @@
-package com.platform.movierama.repositories;
+package com.platform.movieforum.repositories;
 
-import com.platform.movierama.domain.Movie;
+import com.platform.movieforum.domain.Movie;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

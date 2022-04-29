@@ -1,7 +1,7 @@
-package com.platform.movierama.authentication;
+package com.platform.movieforum.authentication;
 
-import com.platform.movierama.domain.User;
-import com.platform.movierama.repositories.UserRepository;
+import com.platform.movieforum.domain.User;
+import com.platform.movieforum.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RamaUserDetailsService implements UserDetailsService {
+public class ForumUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -27,6 +27,6 @@ public class RamaUserDetailsService implements UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException("username not found!");
 
-        return new RamaUserDetails(user);
+        return new ForumUserDetails(user);
     }
 }

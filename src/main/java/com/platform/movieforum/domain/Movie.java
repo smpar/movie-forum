@@ -1,4 +1,4 @@
-package com.platform.movierama.domain;
+package com.platform.movieforum.domain;
 
 import java.util.Date;
 import java.util.HashSet;

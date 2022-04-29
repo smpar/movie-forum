@@ -1,14 +1,14 @@
-package com.platform.movierama.authentication;
+package com.platform.movieforum.authentication;
 
-import com.platform.movierama.domain.User;
-import com.platform.movierama.repositories.UserRepository;
+import com.platform.movieforum.domain.User;
+import com.platform.movieforum.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RamaUserService implements UserService {
+public class ForumUserService implements UserService {
     @Autowired
     private UserRepository userRepository;
 

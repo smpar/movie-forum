@@ -1,2 +1,2 @@
-# movie-rama
+# movie-forum
 Movie social application sharing platform

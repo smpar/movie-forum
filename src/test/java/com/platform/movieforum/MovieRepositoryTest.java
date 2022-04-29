@@ -1,11 +1,11 @@
-package com.platform.movierama;
+package com.platform.movieforum;
 
 import java.util.Date;
 
-import com.platform.movierama.domain.Movie;
-import com.platform.movierama.domain.User;
-import com.platform.movierama.repositories.MovieRepository;
-import com.platform.movierama.repositories.UserRepository;
+import com.platform.movieforum.domain.Movie;
+import com.platform.movieforum.domain.User;
+import com.platform.movieforum.repositories.MovieRepository;
+import com.platform.movieforum.repositories.UserRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
-package com.platform.movierama;
+package com.platform.movieforum;
 
-import com.platform.movierama.domain.User;
-import com.platform.movierama.repositories.UserRepository;
+import com.platform.movieforum.domain.User;
+import com.platform.movieforum.repositories.UserRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.platform.movierama.authentication;
+package com.platform.movieforum.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 
     // Using simple @Autowired on UserDetailsServiceImpl error is thrown ??
-    @Qualifier("ramaUserDetailsService")
+    @Qualifier("forumUserDetailsService")
     @Autowired
     private UserDetailsService customUserDetailsService;
 

@@ -1,17 +1,17 @@
-package com.platform.movierama.authentication;
+package com.platform.movieforum.authentication;
 
 import java.util.Collection;
 
-import com.platform.movierama.domain.User;
+import com.platform.movieforum.domain.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class RamaUserDetails implements UserDetails {
+public class ForumUserDetails implements UserDetails {
 
     private User user;
 
-    public RamaUserDetails(User user) {
+    public ForumUserDetails(User user) {
         this.user = user;
     }
 

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.platform</groupId>
-	<artifactId>movierama</artifactId>
+	<artifactId>movieforum</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>movierama</name>
-	<description>MovieRama application platform</description>
+	<name>movieforum</name>
+	<description>MovieForum application platform</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

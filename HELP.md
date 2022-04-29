@@ -10,9 +10,9 @@
 ### How to run
 
 ```
-git clone  git@github.com:smpar/movie-rama.git
-cd movie-rama
-mvn spring-boot:run
+git clone  git@github.com:smpar/movie-forum.git
+cd movie-forum
+./mvnw spring-boot:run
 ```
 
 Launch browser on http://localhost:8080
@@ -20,7 +20,6 @@ Launch browser on http://localhost:8080
 ### How to test
 
 ```
-cd movie-rama
+cd movie-forum
 ./mvnw test
 ```
-![DemoMovieRama](https://user-images.githubusercontent.com/11176750/162251818-82422bbb-d5ba-460c-afd7-7f7e3d2e6e23.gif)

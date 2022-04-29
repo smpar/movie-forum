@@ -1,6 +1,6 @@
-package com.platform.movierama.authentication;
+package com.platform.movieforum.authentication;
 
-import com.platform.movierama.domain.User;
+import com.platform.movieforum.domain.User;
 
 public interface UserService {
     String save(User user);

@@ -1,17 +1,17 @@
-package com.platform.movierama.controller;
+package com.platform.movieforum.controller;
 
 import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.platform.movierama.authentication.UserService;
-import com.platform.movierama.domain.Movie;
-import com.platform.movierama.domain.MovieUser;
-import com.platform.movierama.domain.User;
-import com.platform.movierama.repositories.MovieRepository;
-import com.platform.movierama.repositories.MovieUserRepository;
-import com.platform.movierama.repositories.UserRepository;
+import com.platform.movieforum.authentication.UserService;
+import com.platform.movieforum.domain.Movie;
+import com.platform.movieforum.domain.MovieUser;
+import com.platform.movieforum.domain.User;
+import com.platform.movieforum.repositories.MovieRepository;
+import com.platform.movieforum.repositories.MovieUserRepository;
+import com.platform.movieforum.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
